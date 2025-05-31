@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
 @import "tailwindcss";
 
-@layer components{
+@layer components {
   .attribution {
     font-size: 11px;
     text-align: center;
@@ -9,9 +9,41 @@
   .attribution a {
     color: hsl(228, 45%, 44%);
   }
+
+  .label {
+    @apply text-slate-500 text-base block mb-4;
+  }
+
+  .text-container {
+    @apply border border-slate-700 hover:border-slate-900 transition-all rounded-sm flex items-stretch justify-center mb-4 has-focus:border-primary-lime;
+  }
+
+  .input-text {
+    @apply w-full h-[inherit] rounded-sm p-4 text-xl font-semibold inline-flex focus:outline-0 cursor-pointer;
+  }
+  .input-text:focus ~ .tag,
+  .input-text:focus-visible ~ .tag {
+    @apply bg-primary-lime text-slate-900;
+  }
+
+  .tag {
+    @apply p-4 text-slate-400 bg-slate-100 rounded-tl-sm rounded-bl-sm peer-focus:bg-primary-lime peer-focus:text-slate-900;
+  }
+  .tag-inverted {
+    @apply p-4 text-slate-400 bg-slate-100 rounded-tr-sm rounded-br-sm peer-focus:bg-primary-lime peer-focus:text-slate-900;
+  }
+  .custom-label {
+    @apply border border-slate-700 rounded-sm px-5 py-4 flex items-center gap-4 has-[:checked]:border-primary-lime has-[:checked]:bg-primary-lime/5 hover:border-primary-lime transition-all cursor-pointer;
+  }
+  .custom-radio {
+    @apply w-6 h-6 border-2 border-slate-400 rounded-full relative before:hidden before:content-[''] before:absolute before:w-full before:h-full before:-scale-75 before:rounded-full before:bg-primary-lime peer-checked:before:block peer-checked:border-2 peer-checked:border-primary-lime peer-checked:ring-1 peer-checked:ring-primary-lime;
+  }
+  .error_message {
+    visibility: hidden;
+  }
 }
 
-@theme{
+@theme {
   --color-primary-lime: hsl(61, 70%, 52%);
   --color-primary-red: hsl(61, 70%, 52%);
   --color-slate-100: hsl(202, 86%, 94%);

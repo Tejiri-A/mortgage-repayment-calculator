@@ -1,58 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- displays site properly based on user's device -->
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
-  
-  <title>Frontend Mentor | Mortgage repayment calculator</title>
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./assets/images/favicon-32x32.png"
+    />
 
-  <div class="bg-primary w-3 h-3 mt-5 ml-5"></div>
-  <script defer type="module" src="./src/main.js"></script>
-</head>
-<body>
+    <title>Frontend Mentor | Mortgage repayment calculator</title>
 
-  Mortgage Calculator
-  Clear All
+    <script defer type="module" src="./src/main.js"></script>
+  </head>
+  <body>
+    <main class="w-full min-h-[100vh] md:flex md:items-center md:justify-center bg-slate-200">
+      <div class="bg-white max-w-[1011px] md:flex md:rounded-3xl">
+        <div class="px-6 py-8" id="details">
+          <form action="">
+            <div class="md:flex md:justify-between md:mb-4">
+              <h1 class="text-slate-900 text-2xl font-semibold">
+                Mortgage Calculator
+              </h1>
+              <p
+                class="text-slate-500 underline text-sm mb-4 cursor-pointer hover:text-slate-900 transition-all"
+                data-function="clear-all"
+              >
+                Clear All
+              </p>
+            </div>
+            <div>
+              <label class="label group" for="amount">Mortgage Amount</label>
+              <div
+                class="border border-slate-700 hover:border-slate-900 transition-all rounded-sm w-full inline-flex items-stretch justify-center relative before:content-['£'] before:text-slate-400 before:bg-slate-200 before:p-4 before:rounded-tl-sm before:rounded-bl-sm has-focus:border-primary-lime has-focus:before:bg-primary-lime has-focus:before:text-slate-900"
+              data-selector="text-container">
+                <!-- <div class="tag">$</div> -->
+                <input
+                  class="input-text peer"
+                  type="text"
+                  name="amount"
+                  id="amount"
+                />
+              </div>
+              <p class="error_message">yes</p>
+            </div>
+            <div class="md:flex md:gap-8">
+              <div>
+                <label class="label" for="term">Mortgage Term</label>
+                <div class="text-container" data-selector="text-container">
+                  <input
+                    class="input-text peer"
+                    type="text"
+                    name="term"
+                    id="term"
+                  />
+                  <div class="tag-inverted">years</div>
+                </div>
+                <p class="error_message">yes</p>
+              </div>
+              <div>
+                <label class="label" for="rate">Interest Rate</label>
+                <div class="text-container" data-selector="text-container">
+                  <input
+                    class="input-text peer"
+                    type="text"
+                    name="rate"
+                    id="rate"
+                  />
+                  <div class="tag-inverted">%</div>
+                </div>
+                <p class="error_message">yes</p>
+              </div>
+            </div>
+            <!-- mortgage type -->
+            <div class="mb-6">
+              <p class="label">Mortgage Type</p>
+              <div class="flex flex-col gap-4">
+                <label for="repayment" class="custom-label">
+                  <input
+                    type="radio"
+                    name="type"
+                    id="repayment"
+                    value="repayment"
+                    class="hidden peer"
+                  />
+                  <div class="custom-radio"></div>
+                  <p class="text-slate-900 font-bold text-xl">Repayment</p>
+                </label>
+                <label for="interest" class="custom-label">
+                  <input
+                    type="radio"
+                    name="type"
+                    id="interest"
+                    value="interest"
+                    class="hidden peer"
+                  />
+                  <div class="custom-radio"></div>
+                  <p class="text-slate-900 font-bold text-xl">
+                    Interest Only
+                  </p>
+                </label>
+              </div>
+              <p class="error_message">yes</p>
+            </div>
+            <!-- calculate button -->
+            <button
+              class="bg-primary-red w-full py-4 rounded-full capitalize font-bold text-slate-900 text-xl inline-flex items-center justify-center gap-2 before:content-[url('../src/assets/images/icon-calculator.svg')] before:-translate-y-[-10%] hover:bg-primary-lime/50 transition-all cursor-pointer"
+            >
+              calculate repayments
+            </button>
+          </form>
+        </div>
+        <div class="bg-slate-900 px-6 py-8 flex items-center md:rounded-tr-3xl md:rounded-br-3xl md:rounded-bl-[4rem]" id="results">
+          <!-- empty results start -->
+          <div class="flex flex-col items-center gap-4" id="empty">
+            <img
+              src="./src/assets/images/illustration-empty.svg"
+              alt="mortgage calculator"
+            />
+            <h1 class="text-2xl text-white font-bold">Results shown here</h1>
+            <p class="text-center text-slate-300">
+              Complete the form and click “calculate repayments” to see what
+              your monthly repayments would be.
+            </p>
+          </div>
+          <!-- empty results end -->
 
-  Mortgage Amount
+          <!-- completed results start -->
+          <div class="hidden" id="completed">
+            <h1>Your results</h1>
+            <p>
+              Your results are shown below based on the information you
+              provided. To adjust the results, edit the form and click
+              “calculate repayments” again.
+            </p>
+            <div id="summary">
+              <p>Your monthly repayments</p>
+              <p id="repaymentAmount">$1999.99</p>
+              <hr />
+              <p>Total you'll repay over the term</p>
+              <p id="termRepayment">$539,888.88</p>
+            </div>
+          </div>
+          <!-- completed results end -->
+        </div>
+      </div>
+    </main>
 
-  Mortgage Term
-
-  Interest Rate
-
-  Mortgage Type
-  Repayment
-  Interest Only
-
-  Calculate Repayments
-
-  <!-- Empty results start -->
-
-  Results shown here
-
-  Complete the form and click “calculate repayments” to see what 
-  your monthly repayments would be.
-
-  <!-- Empty results end -->
-
-  <!-- Completed results start -->
-
-  Your results
-
-  Your results are shown below based on the information you provided. 
-  To adjust the results, edit the form and click “calculate repayments” again.
-
-  Your monthly repayments
-
-  Total you'll repay over the term
-
-  <!-- Completed results end -->
-  
-  <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
-  </div>
-</body>
+    <!-- <div class="attribution">
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.
+      Coded by <a href="#">Your Name Here</a>.
+    </div> -->
+  </body>
 </html>
