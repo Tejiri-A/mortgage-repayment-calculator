@@ -1,6 +1,6 @@
 # Frontend Mentor - Mortgage repayment calculator solution
 
-This is a solution to the [Mortgage repayment calculator challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/mortgage-repayment-calculator-Galx1LXK73). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
+This is a solution to the [Mortgage repayment calculator challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/mortgage-repayment-calculator-Galx1LXK73). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
 ## Table of contents
 
@@ -8,15 +8,13 @@ This is a solution to the [Mortgage repayment calculator challenge on Frontend M
   - [The challenge](#the-challenge)
   - [Screenshot](#screenshot)
   - [Links](#links)
+  - [How to install](#Install-instructions)
 - [My process](#my-process)
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
   - [Continued development](#continued-development)
   - [Useful resources](#useful-resources)
 - [Author](#author)
-- [Acknowledgments](#acknowledgments)
-
-**Note: Delete this note and update the table of contents based on what sections you keep.**
 
 ## Overview
 
@@ -32,83 +30,145 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
-
-Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
-
-Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it. 
-
-Then crop/optimize/edit your image however you like, add it to your project, and update the file path in the image above.
-
-**Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
+![](./screenshot.png)
 
 ### Links
 
 - Solution URL: [Add solution URL here](https://your-solution-url.com)
 - Live Site URL: [Add live site URL here](https://your-live-site-url.com)
 
+### Install-instructions
+
+To install dependencies run:
+
+```
+npm install
+```
+
+To start the dev server (which can also be opened on devices connected to the same network) run:
+
+```
+npm run dev -- --host
+```
+
 ## My process
 
 ### Built with
 
 - Semantic HTML5 markup
-- CSS custom properties
+- Tailwindcss
 - Flexbox
 - CSS Grid
 - Mobile-first workflow
-- [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
-
-**Note: These are just examples. Delete this note and replace the list above with your own choices**
+- Javascript
+- [Vite](https://vite.dev/) - Dev and build tools
 
 ### What I learned
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
+I learned how to prevent users from entering non-numerical values in javascript using the combination of 'keyup' event listener and regular expressions
 
-To see how you can add code snippets, see below:
+```js
+if (!/[0-9]|Backspace|Delete|ArrowLeft|ArrowRight|Tab/.test(e.key)) {
+  e.preventDefault();
+}
+```
+
+I also learned how to apply international number format on user entered digits in the textbox and how to remove the formatting when the text box's value is retrieved for calculation
+
+- Application of international number format
+
+```js
+setTimeout(() => {
+  let value = mortgageAmount.value.replace(/\D/g, "");
+  if (value) {
+    value = new Intl.NumberFormat("en-GB").format(Number(value));
+    mortgageAmount.value = value;
+  }
+}, 0);
+```
+
+- Removal of formatting ahead of calculation
+
+```js
+const principal = +mortgageAmount.value.replace(/,/g, "");
+```
+
+I also learned to use the isolation property to reset the stacking context in order for z-indexes to work as expected.
 
 ```html
-<h1>Some HTML code I'm proud of</h1>
-```
-```css
-.proud-of-this-css {
-  color: papayawhip;
-}
-```
-```js
-const proudOfThisFunc = () => {
-  console.log('🎉')
-}
-```
+<div
+  class="flex-1/2 bg-[color:hsl(201,54%,16%)] grid place-items-center px-6 py-8 md:rounded-tr-3xl md:rounded-br-3xl md:rounded-bl-[4rem] isolate"
+  id="results"
+>
+  <!-- empty results start -->
+  <div class="hidden flex-col items-center gap-4" id="empty">
+    <img
+      src="./src/assets/images/illustration-empty.svg"
+      alt="mortgage calculator"
+    />
+    <h1 class="text-2xl text-white font-bold">Results shown here</h1>
+    <p class="text-center text-slate-300">
+      Complete the form and click “calculate repayments” to see what your
+      monthly repayments would be.
+    </p>
+  </div>
+  <!-- empty results end -->
 
-If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
-
-**Note: Delete this note and the content within this section and replace with your own learnings.**
+  <!-- completed results start -->
+  <div class="flex flex-col" id="completed">
+    <h1 class="text-2xl text-white font-semibold md:mb-4">Your results</h1>
+    <p class="text-slate-300 mb-6 md:mb-8">
+      Your results are shown below based on the information you provided. To
+      adjust the results, edit the form and click “calculate repayments” again.
+    </p>
+    <div
+      class="bg-[color:hsl(202,56%,12%)] px-2 py-4 md:px-8 md:py-8 rounded-sm relative before:absolute before:content-[''] before:w-full before:h-full before:bg-primary-lime before:bottom-1 before:left-0 before:-z-10 before:rounded-[inherit]"
+      id="summary"
+    >
+      <p class="text-slate-300 text-sm md:text-base mb-2">
+        Your monthly repayments
+      </p>
+      <p
+        class="text-primary-lime font-semibold text-3xl md:text-6xl mb-2 md:mb-8"
+        id="repaymentAmount"
+      >
+        £1999.99
+      </p>
+      <hr class="mb-2 md:mb-8 text-slate-500" />
+      <p class="text-slate-300 text-sm md:text-base mb-2">
+        Total you'll repay over the term
+      </p>
+      <p
+        class="text-white text-xl md:text-2xl font-semibold"
+        id="termRepayment"
+      >
+        £539,888.88
+      </p>
+    </div>
+  </div>
+  <!-- completed results end -->
+</div>
+```
 
 ### Continued development
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
-
-**Note: Delete this note and the content within this section and replace with your own plans for continued development.**
+- **Accessibility (a11y):** I have to learn how to make my forms and UI more accessible to all users, including those using assistive technologies.
+- **Unit and Integration Testing:** I should explore testing frameworks like Jest or Testing Library to write tests for my JavaScript and UI components.
+- **TypeScript:** I should consider adding TypeScript to my projects for type safety and improved developer experience.
+- **State Management:** Look into state management solutions (like Redux, Zustand, or React Context) for handling more complex UI states.
+- **Performance Optimization:** I should study techniques for optimizing web performance, such as code splitting, lazy loading, and minimizing reflows.
+- **Progressive Web Apps (PWA):** I can also learn how to make my app installable and usable offline.
+- **Continuous Integration/Deployment (CI/CD):** I should learn how to automate my build and deployment process using tools like GitHub Actions or Netlify.
+- **Backend Integration:** I should practice connecting my frontend to APIs or building simple backends with Node.js or similar technologies.
+- **Advanced CSS:** I should deepen my knowledge of CSS, including custom properties, advanced selectors, and animation.
+- **Design Systems:** I should explore building reusable component libraries and maintaining consistent design across projects.
 
 ### Useful resources
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
-
-**Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
+- [Isolation](https://www.freecodecamp.org/news/the-css-isolation-property/) - This helped me understand the stacking context and the mysterious parts of z-index.
 
 ## Author
 
-- Website - [Add your name here](https://www.your-site.com)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Twitter - [@yourusername](https://www.twitter.com/yourusername)
-
-**Note: Delete this note and add/remove/edit lines above based on what links you'd like to share.**
-
-## Acknowledgments
-
-This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
-
-**Note: Delete this note and edit this section's content as necessary. If you completed this challenge by yourself, feel free to delete this section entirely.**
+- Website - [Oghenetejiri Samuel Amrasa](https://www.your-site.com)
+- Frontend Mentor - [@Tejiri-A](https://www.frontendmentor.io/profile/Tejiri-A)
+- Twitter - [@\_tejiri_a](https://www.twitter.com/_tejiri_a)
